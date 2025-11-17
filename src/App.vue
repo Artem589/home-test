@@ -1,17 +1,13 @@
 <script setup>
 import Button from "./components/Button.vue";
-import ProductCard from "./components/ProductCard.vue";
 
 </script>
 
 <template>
-<!--  <main class="main">-->
-<!--    <Button>Кнопка</Button>-->
-<!--  </main>-->
+  <main class="main">
+    <Button>Начать игру</Button>
+  </main>
 
-  <ProductCard>
-    Сохранить
-  </ProductCard>
 </template>
 
 <style scoped>
@@ -19,9 +15,6 @@ import ProductCard from "./components/ProductCard.vue";
   background-color: var(--color-bg-main);
   padding: 60px 50px;
   border-radius: 25px;
-}
-.right-block {
-
 }
 
 </style>

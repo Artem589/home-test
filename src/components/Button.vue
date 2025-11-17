@@ -4,10 +4,6 @@
 
 <template>
   <button class="button">
-    <div class="button__icon">
-      <slot name="icon" />
-      <slot name="text" />
-    </div>
     <slot />
   </button>
 </template>
@@ -15,18 +11,15 @@
 <style scoped>
 .button {
   border: none;
-  border-radius: 16px;
-  background: var(--gradient);
-  padding: 14px;
+  border-radius: var(--border-radius-button);
+  background: var(--color-bg);
+  padding: 16px 10px;
   font-family: var(--font), sans-serif;
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 24px;
   color: var(--color-primary);
   cursor: pointer;
-}
-
-.button:hover {
-  background: var(--gradient-inverted);
+  width: 315px;
+  line-height: 36px;
 }
 
 </style>
