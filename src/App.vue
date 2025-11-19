@@ -1,17 +1,31 @@
 <script setup>
 import Button from "./components/Button.vue";
-import ProductCard from "./components/ProductCard.vue";
+import Stat from "./components/Stat.vue";
 
+import CitySelect from "./components/CitySelect.vue";
+
+const data = {
+  label: 'Влажность',
+  stat: '90%'
+}
+
+const getCity = (city) => {
+  console.log(city)
+}
 </script>
 
 <template>
-<!--  <main class="main">-->
-<!--    <Button>Кнопка</Button>-->
-<!--  </main>-->
+  <main class="main">
+<!--    <Stat v-bind="data"/>-->
+<!--    <Stat stat="0 %"/>-->
+<!--    <Button>-->
+<!--      <icon-location />-->
+<!--      Кнопка-->
+<!--    </Button>-->
 
-  <ProductCard>
-    Сохранить
-  </ProductCard>
+    <CitySelect @select-city="getCity"/>
+  </main>
+
 </template>
 
 <style scoped>
@@ -20,10 +34,6 @@ import ProductCard from "./components/ProductCard.vue";
   padding: 60px 50px;
   border-radius: 25px;
 }
-.right-block {
-
-}
-
 </style>
 
 

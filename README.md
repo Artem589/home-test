@@ -1,10 +1,10 @@
 # Компоненты
 - App
 - LeftPanel
-- StatBlock
+- StatBlock +
 - ListDays
 - DayCart
 - WeatherIcon
-- CitySelect
-- Button
+- CitySelect +
+- Button +
 - Input

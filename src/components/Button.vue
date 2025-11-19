@@ -1,5 +1,10 @@
 <script setup>
-
+const props = defineProps({
+  text: {
+    type: String,
+    default: 'Кнопка'
+  }
+})
 </script>
 
 <template>
@@ -14,6 +19,9 @@
 
 <style scoped>
 .button {
+  display: flex;
+  align-items: center;
+  gap: 9px;
   border: none;
   border-radius: 16px;
   background: var(--gradient);
