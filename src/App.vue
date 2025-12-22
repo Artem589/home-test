@@ -4,24 +4,31 @@ import CardWord from "./components/CardWord.vue";
 import {ref} from "vue";
 
 
-const isTurn = ref(false)
+const score = ref(11)
 
 const cards = ref([
   {
     isTurn: false,
-    ruText: 'непризнанный',
-    enText: 'unadmitted',
+    translation: 'непризнанный',
+    word: 'unadmitted',
+    state: 'closed',
+    status: 'pending',
   },
   {
     isTurn: false,
-    ruText: 'тычинка',
-    enText: 'stamen',
+    translation: 'тычинка',
+    word: 'stamen',
+    state: 'closed',
+    status: 'pending',
   }
 ])
 
 const turnCard = (card) => {
-  card.isTurn = true
-  console.log(card)
+  card.state = 'opened'
+}
+
+const changeStatus = (card, status) => {
+  card.status = status
 }
 </script>
 
@@ -31,7 +38,7 @@ const turnCard = (card) => {
       <div class="container">
         <div class="header__inner">
           <span class="header__title">Запомни слово</span>
-          <score-likes :score="100"/>
+          <score-likes :score />
         </div>
       </div>
     </header>
@@ -43,11 +50,13 @@ const turnCard = (card) => {
             <card-word v-for="(card, index) in cards"
                        :key="index"
                        :is-turn="card.isTurn"
-                       :ru-text="card.ruText"
-                       :en-text="card.enText"
+                       :translation="card.translation"
+                       :word="card.word"
+                       :state="card.state"
+                       :status="card.status"
                        :count="index + 1"
                        @click-turn="turnCard(card)"
-                       @change-status="console.log($event)"
+                       @change-status="changeStatus(card,$event)"
             />
           </div>
         </div>
