@@ -8,13 +8,21 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  ruText: {
+  translation: {
     type: String,
     default: 'непризнанный'
   },
-  enText: {
+  word: {
     type: String,
     default: 'unadmitted'
+  },
+  state: {
+    type: String,
+    default: 'closed'
+  },
+  status: {
+    type: String,
+    default: 'pending'
   },
   count: {
     type: Number,
@@ -33,20 +41,24 @@ const changeStatus = (status) => {
   emit('change-status', status)
 }
 
-const cardText = computed(() => props.isTurn ? props.ruText : props.enText)
+const cardText = computed(() => props.state === 'opened' ? props.translation : props.word)
 const countCard = computed(() => props.count < 10 ? `0${props.count}` : props.count)
 </script>
 
 <template>
   <div class="card">
     <div class="card__inner">
+      <div>
+        <icon-success class="card__status-icon" v-if="props.status === 'success'"/>
+        <icon-close class="card__status-icon" v-if="props.status === 'fail'"/>
+      </div>
       <div class="card__count">{{ countCard }}</div>
       <div class="card__value">{{ cardText }}</div>
-      <div class="card__action" v-if="!props.isTurn" @click="turnCard">
+      <div class="card__action" v-if="props.state === 'closed'" @click="turnCard">
         Перевернуть
       </div>
-      <div class="card__status-change" v-else>
-        <icon-close class="card__icon" @click="changeStatus('error')"/>
+      <div class="card__status-change" v-if="props.state === 'opened' && props.status === 'pending'">
+        <icon-close class="card__icon" @click="changeStatus('fail')"/>
         <icon-success class="card__icon" @click="changeStatus('success')"/>
       </div>
     </div>
@@ -82,7 +94,15 @@ const countCard = computed(() => props.count < 10 ? `0${props.count}` : props.co
   width: 16px;
   height: 16px;
   background-color: var(--color-primary);
+}
 
+.card__status-icon {
+  position: absolute;
+  left: 50%;
+  top: -15px;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 30px;
 }
 
 .card__value {
@@ -112,6 +132,8 @@ const countCard = computed(() => props.count < 10 ? `0${props.count}` : props.co
   text-transform: uppercase;
   color: var(--color-primary-text);
   background-color: var(--color-primary);
+
+  cursor: pointer;
 }
 
 .card__status-change {
@@ -130,5 +152,6 @@ const countCard = computed(() => props.count < 10 ? `0${props.count}` : props.co
 .card__icon {
   width: 24px;
   height: 24px;
+  cursor: pointer;
 }
 </style>
