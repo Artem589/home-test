@@ -1,12 +1,14 @@
 :root {
   --color-primary: #FFFFFF;
   --color-primary-inverted: #000000;
+  --color-primary-text: #222222;
   --color-bg: #343D4B;
   --color-bg-card: #272E37;
   --color-bg-main: #222831;
+  --color-bg-game: #F0F4F8;
   --gradient: linear-gradient(91deg, rgba(144, 217, 224, 0.90) 0.2%, rgba(84, 96, 230, 0.90) 100%);
   --gradient-inverted: linear-gradient(256deg, rgba(144, 217, 224, 0.90) 9.04%, rgba(84, 96, 230, 0.90) 100%);
-  --font: "Montserrat", sans-serif;
+  --font: "Roboto", sans-serif;
 }
 
 body {
@@ -16,10 +18,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
-  color: var(--color-primary);
-  background-color: var(--color-bg);
+  color: var(--color-primary-inverted);
+  background-color: var(--color-bg-game);
 
-  display: grid;
-  place-items: center;
+  /*display: grid;*/
+  /*place-items: center;*/
   min-height: 100vh;
 }
