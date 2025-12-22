@@ -4,7 +4,7 @@ import CardWord from "./components/CardWord.vue";
 import {ref} from "vue";
 
 
-const score = ref(11)
+const score = ref(100)
 
 const cards = ref([
   {
