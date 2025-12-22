@@ -43,6 +43,10 @@ const changeStatus = (status) => {
 
 const cardText = computed(() => props.state === 'opened' ? props.translation : props.word)
 const countCard = computed(() => props.count < 10 ? `0${props.count}` : props.count)
+
+// status
+const statusComplete = computed(() => props.state === 'opened' && (props.status === 'success' || props.status === 'fail'))
+const choiceStatus = computed(() => props.state === 'opened' && props.status === 'pending')
 </script>
 
 <template>
@@ -57,7 +61,10 @@ const countCard = computed(() => props.count < 10 ? `0${props.count}` : props.co
       <div class="card__action" v-if="props.state === 'closed'" @click="turnCard">
         Перевернуть
       </div>
-      <div class="card__status-change" v-if="props.state === 'opened' && props.status === 'pending'">
+      <div class="card__action" v-else-if="statusComplete" @click="turnCard">
+        Завершено
+      </div>
+      <div class="card__status-change" v-if="choiceStatus">
         <icon-close class="card__icon" @click="changeStatus('fail')"/>
         <icon-success class="card__icon" @click="changeStatus('success')"/>
       </div>
