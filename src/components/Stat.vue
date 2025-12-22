@@ -3,7 +3,7 @@
 defineProps({
   label: {
     type: String,
-    default: 'Label'
+    default: 'Осадки'
   },
   stat: {
     type: String,

@@ -3,34 +3,55 @@ import Button from "./Button.vue";
 import IconLocation from "../icons/IconLocation.vue";
 import {ref} from 'vue'
 
+const props = defineProps({
+  isChangeCity: {
+    type: Boolean,
+    default: false
+  }
+})
+
 const emit = defineEmits({
   selectCity(payload) {
     console.log(`Validating payload ${payload}`)
     return payload
+  },
+  changeCity(payload) {
+    return payload
   }
+
 })
 
+const cityName = ref('')
+const isEdited = ref(false)
+
 const select = () => {
- emit('selectCity')
+  emit('selectCity', cityName.value)
+  change()
+}
+const change = () => {
+  isEdited.value = !isEdited.value
 }
 </script>
 
 <template>
   <div class="city-select">
 
-    <div class="city-select__input" v-if="change">
-      <input type="text" class="input" placeholder="Введите город">
-      <Button>Сохранить</Button>
+
+    <div class="city-select__input" v-if="isEdited">
+      <input type="text" class="input" placeholder="Введите город" v-model="cityName">
+      <Button @click="select">Сохранить</Button>
     </div>
 
-    <Button v-else>
+
+    <Button v-else @click="change">
       <icon-location/>
       Изменить город
     </Button>
+
   </div>
 
 
-  <button @click="select" on>Изменить</button>
+  <!--  <button @click="select">Изменить</button>-->
 </template>
 
 <style scoped>

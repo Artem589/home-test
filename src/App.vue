@@ -1,31 +1,59 @@
 <script setup>
 import Button from "./components/Button.vue";
 import Stat from "./components/Stat.vue";
+import Test from "./components/Test.vue";
 
 import CitySelect from "./components/CitySelect.vue";
+import {computed, nextTick, onMounted, ref} from "vue";
 
-const data = {
-  label: 'Влажность',
-  stat: '90%'
-}
+const cityName = ref('Moscow')
+
+const data = ref({
+  humidity: 90
+})
+
+const dateT = ref(new Date )
+
+const date = computed(() => dateT.value)
 
 const getCity = (city) => {
-  console.log(city)
+  cityName.value = city
+  data.value.humidity = 20
 }
+
+const dataModified = computed( (prev) => {
+  console.log(prev)
+  return {
+    label: 'Влажность',
+    stat: `${data.value.humidity}%`
+  }
+})
+
+onMounted( () => {
+
+  setInterval(() => {
+  dateT.value = new Date()
+  },1000)
+})
 </script>
 
 <template>
-  <main class="main">
-<!--    <Stat v-bind="data"/>-->
+<!--  <main class="main">-->
+<!--    <div id="city">-->
+<!--      {{  date }}-->
+<!--      {{ cityName }}-->
+
+<!--    </div>-->
+<!--    <Stat v-bind="dataModified"/>-->
 <!--    <Stat stat="0 %"/>-->
-<!--    <Button>-->
-<!--      <icon-location />-->
-<!--      Кнопка-->
-<!--    </Button>-->
+<!--    &lt;!&ndash;    <Button>&ndash;&gt;-->
+<!--    &lt;!&ndash;      <icon-location />&ndash;&gt;-->
+<!--    &lt;!&ndash;      Кнопка&ndash;&gt;-->
+<!--    &lt;!&ndash;    </Button>&ndash;&gt;-->
 
-    <CitySelect @select-city="getCity"/>
-  </main>
-
+<!--    <CitySelect @select-city="getCity" @change-city="getCity"/>-->
+<!--  </main>-->
+<test ></test>
 </template>
 
 <style scoped>
