@@ -1,7 +1,8 @@
 <script setup>
 import Button from "./Button.vue";
 import IconLocation from "../icons/IconLocation.vue";
-import {ref} from 'vue'
+import {ref, onMounted, onBeforeMount, onUpdated, watch, watchEffect, onWatcherCleanup} from 'vue'
+import Input from "./Input.vue";
 
 const props = defineProps({
   isChangeCity: {
@@ -12,7 +13,6 @@ const props = defineProps({
 
 const emit = defineEmits({
   selectCity(payload) {
-    console.log(`Validating payload ${payload}`)
     return payload
   },
   changeCity(payload) {
@@ -21,7 +21,7 @@ const emit = defineEmits({
 
 })
 
-const cityName = ref('')
+const cityName = ref('Moscow')
 const isEdited = ref(false)
 
 const select = () => {
@@ -31,14 +31,34 @@ const select = () => {
 const change = () => {
   isEdited.value = !isEdited.value
 }
+
+const count = ref(0)
+
+// watch(cityName, (newVal, oldVal) => {
+//   console.log(cityName.value)
+//   onWatcherCleanup(() => {
+//     console.log('cleanup')
+//   })
+//
+// })
+//
+// watch(count, (newVal) => {
+//   const timer = setTimeout(() => {
+//     console.log('Delayed:', newVal)
+//   }, 1000)
+//
+// })
+
+onMounted(() => {
+  emit('selectCity', cityName.value)
+})
 </script>
 
 <template>
   <div class="city-select">
 
-
     <div class="city-select__input" v-if="isEdited">
-      <input type="text" class="input" placeholder="Введите город" v-model="cityName">
+      <Input v-model="cityName" @keydown.enter="select" placeholder="Введите город"/>
       <Button @click="select">Сохранить</Button>
     </div>
 
@@ -66,20 +86,6 @@ const change = () => {
   justify-content: space-between;
   align-items: center;
   gap: 15px;
-}
-
-.input {
-  padding: 15px 18px;
-  background-color: #272E37;
-  border-radius: 10px;
-  border: none;
-  height: 100%;
-
-  color: #FFFFFF;
-}
-
-.input::placeholder {
-  color: #3F4958;
 }
 
 </style>

@@ -26,10 +26,10 @@ defineProps({
   justify-content: space-between;
   font-size: 28px;
   gap: 16px;
-  text-transform: uppercase;
 }
 
 .label{
+  text-transform: uppercase;
   font-weight: 700;
 }
 
