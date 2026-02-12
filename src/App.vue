@@ -1,27 +1,12 @@
 <script setup>
 import ScoreLikes from "./components/ScoreLikes.vue";
 import CardWord from "./components/CardWord.vue";
-import {ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 
 
 const score = ref(100)
-
-const cards = ref([
-  {
-    isTurn: false,
-    translation: 'непризнанный',
-    word: 'unadmitted',
-    state: 'closed',
-    status: 'pending',
-  },
-  {
-    isTurn: false,
-    translation: 'тычинка',
-    word: 'stamen',
-    state: 'closed',
-    status: 'pending',
-  }
-])
+const data = ref([])
+const cards = ref([])
 
 const turnCard = (card) => {
   card.state = 'opened'
@@ -30,6 +15,35 @@ const turnCard = (card) => {
 const changeStatus = (card, status) => {
   card.status = status
 }
+
+const getRandomWords = async () => {
+  try {
+    const response = await fetch('http://localhost:8080/api/random-words');
+
+    data.value = await response.json()
+  } catch (error) {
+    console.error('Ошибка при получении данных:', error);
+  }
+}
+
+watch((data), (newData) => {
+
+  cards.value = newData.map((item, index) => {
+        return {
+          index,
+          isTurn: false,
+          translation: item.translation,
+          word: item.word,
+          state: 'closed',
+          status: 'pending',
+        }
+      },
+  )
+})
+
+onMounted(() => {
+  getRandomWords()
+})
 </script>
 
 <template>
@@ -38,7 +52,7 @@ const changeStatus = (card, status) => {
       <div class="container">
         <div class="header__inner">
           <span class="header__title">Запомни слово</span>
-          <score-likes :score />
+          <score-likes :score/>
         </div>
       </div>
     </header>
@@ -46,7 +60,8 @@ const changeStatus = (card, status) => {
     <main class="main">
       <div class="container">
         <div class="main__inner">
-          <div class="main__cards">
+          <div v-if="data.length" class="main__cards">
+
             <card-word v-for="(card, index) in cards"
                        :key="index"
                        :is-turn="card.isTurn"
@@ -58,13 +73,15 @@ const changeStatus = (card, status) => {
                        @click-turn="turnCard(card)"
                        @change-status="changeStatus(card,$event)"
             />
+
+          </div>
+          <div v-else class="main__error">
+            Данные не загружены
           </div>
         </div>
       </div>
     </main>
   </div>
-
-
 </template>
 
 <style scoped>
@@ -100,6 +117,30 @@ const changeStatus = (card, status) => {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 107px 66px;
+}
+
+.main__error {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  height: 50vh;
+  font-size: 32px;
+  color: red;
+  text-align: center;
+  animation: blink 3s infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 </style>
 

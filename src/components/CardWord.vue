@@ -117,6 +117,7 @@ const choiceStatus = computed(() => props.state === 'opened' && props.status ===
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
   font-size: 18px;
   line-height: 100%;
   letter-spacing: 0;
