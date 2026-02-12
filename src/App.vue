@@ -4,7 +4,7 @@ import CardWord from "./components/CardWord.vue";
 import {onMounted, ref, watch} from "vue";
 
 
-const score = ref(100)
+const score = ref(0)
 const data = ref([])
 const cards = ref([])
 
@@ -13,6 +13,9 @@ const turnCard = (card) => {
 }
 
 const changeStatus = (card, status) => {
+  if(status === 'success') {
+    score.value++
+  }
   card.status = status
 }
 
