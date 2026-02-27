@@ -2,13 +2,14 @@
   --color-primary: #FFFFFF;
   --color-primary-inverted: #000000;
   --color-primary-text: #222222;
-  --color-bg: #343D4B;
   --color-bg-card: #272E37;
   --color-bg-main: #222831;
   --color-bg-game: #F0F4F8;
   --gradient: linear-gradient(91deg, rgba(144, 217, 224, 0.90) 0.2%, rgba(84, 96, 230, 0.90) 100%);
   --gradient-inverted: linear-gradient(256deg, rgba(144, 217, 224, 0.90) 9.04%, rgba(84, 96, 230, 0.90) 100%);
   --font: "Roboto", sans-serif;
+  --color-bg: #008BFE;
+  --border-radius-button: 100px;
 }
 
 body {

@@ -1,5 +1,6 @@
 <script setup>
 import IconHeart from "../icons/IconHeart.vue";
+import { computed } from 'vue'
 
 const props = defineProps({
   score: {
@@ -7,16 +8,26 @@ const props = defineProps({
     default: 0
   }
 })
+
+const classList = computed(() => {
+  const baseClass = 'likes'
+
+  return {
+    [baseClass]: true,
+    [`${baseClass}--minus`]: props.score < 0
+  }
+
+})
 </script>
 
 <template>
-  <div class="likes">
+  <div :class="classList">
     <span class="likes__score">{{ props.score }}</span>
     <icon-heart />
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .likes {
   display: flex;
   justify-content: center;
@@ -28,6 +39,10 @@ const props = defineProps({
   background-color: #CCE8FF;
   color: #008BFE;
   box-shadow: 0 0 4px 0 #00000026;
+
+  &--minus {
+    color: red;
+  }
 }
 
 .likes__score {

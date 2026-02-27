@@ -2,6 +2,7 @@
 import ScoreLikes from "./components/ScoreLikes.vue";
 import CardWord from "./components/CardWord.vue";
 import {onMounted, ref, watch} from "vue";
+import BaseButton from "./components/BaseButton.vue";
 
 
 const score = ref(0)
@@ -13,8 +14,11 @@ const turnCard = (card) => {
 }
 
 const changeStatus = (card, status) => {
-  if(status === 'success') {
-    score.value++
+  if (status === 'success') {
+    score.value = score.value + 10
+  }
+  if (status === 'fail') {
+    score.value = score.value - 4
   }
   card.status = status
 }
@@ -44,9 +48,6 @@ watch((data), (newData) => {
   )
 })
 
-onMounted(() => {
-  getRandomWords()
-})
 </script>
 
 <template>
@@ -63,23 +64,28 @@ onMounted(() => {
     <main class="main">
       <div class="container">
         <div class="main__inner">
-          <div v-if="data.length" class="main__cards">
+          <div v-if="data.length">
+            <div class="main__cards">
+              <card-word v-for="(card, index) in cards"
+                         :key="index"
+                         :is-turn="card.isTurn"
+                         :translation="card.translation"
+                         :word="card.word"
+                         :state="card.state"
+                         :status="card.status"
+                         :count="index + 1"
+                         @click-turn="turnCard(card)"
+                         @change-status="changeStatus(card,$event)"
+              />
 
-            <card-word v-for="(card, index) in cards"
-                       :key="index"
-                       :is-turn="card.isTurn"
-                       :translation="card.translation"
-                       :word="card.word"
-                       :state="card.state"
-                       :status="card.status"
-                       :count="index + 1"
-                       @click-turn="turnCard(card)"
-                       @change-status="changeStatus(card,$event)"
-            />
-
+            </div>
+            <div class="main__button-restart">
+              <base-button>Начать заново</base-button>
+            </div>
           </div>
-          <div v-else class="main__error">
-            Данные не загружены
+
+          <div v-else class="main__bottom">
+            <base-button @click="getRandomWords">Начать игру</base-button>
           </div>
         </div>
       </div>
@@ -122,28 +128,23 @@ onMounted(() => {
   gap: 107px 66px;
 }
 
-.main__error {
+.main__bottom {
   display: flex;
   flex-direction: column;
   align-content: center;
   justify-content: center;
-  height: 50vh;
+  flex-wrap: wrap;
+  height: 80vh;
   font-size: 32px;
   color: red;
   text-align: center;
-  animation: blink 3s infinite;
 }
 
-@keyframes blink {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+.main__button-restart {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: 100px 0 65px 0;
 }
 </style>
 

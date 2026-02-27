@@ -5,10 +5,6 @@ const isShowContent = ref(false)
 
 const buttonLabel = computed(() => isShowContent.value ? 'Скрыть' : 'Показать')
 
-onBeforeUpdate(() => {
-
-console.log('Ну привет')
-})
 </script>
 
 <template>
