@@ -23,6 +23,11 @@ const changeStatus = (card, status) => {
   card.status = status
 }
 
+const restartCards = () => {
+  score.value = 0
+  getRandomWords()
+}
+
 const getRandomWords = async () => {
   try {
     const response = await fetch('http://localhost:8080/api/random-words');
@@ -80,7 +85,7 @@ watch((data), (newData) => {
 
             </div>
             <div class="main__button-restart">
-              <base-button>Начать заново</base-button>
+              <base-button @click="restartCards">Начать заново</base-button>
             </div>
           </div>
 
